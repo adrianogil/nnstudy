@@ -1,5 +1,10 @@
 import numpy as np
 
+try:
+    xrange
+except NameError:
+    xrange = range
+
 def learn(nn, input_samples, targets, epoches=10, min_mse=1e-16, max_mse=1e+100):
 
     if len(nn.layers) > 1:

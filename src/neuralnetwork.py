@@ -1,5 +1,10 @@
 import numpy as np
 
+try:
+    xrange
+except NameError:
+    xrange = range
+
 def hardlim(n):
     for x in np.nditer(n, op_flags=['readwrite']):
         if n < 0:
