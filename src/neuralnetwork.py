@@ -7,7 +7,7 @@ except NameError:
 
 def hardlim(n):
     for x in np.nditer(n, op_flags=['readwrite']):
-        if n < 0:
+        if x[...] < 0:
             x[...] = 0
         else:
             x[...] =  1
@@ -15,37 +15,48 @@ def hardlim(n):
 
 
 def hardlims(n):
-    if n < 0:
-        return -1
-    else:
-        return 1
+    for x in np.nditer(n, op_flags=['readwrite']):
+        if x[...] < 0:
+            x[...] = -1
+        else:
+            x[...] =  1
+    return n
 
 def purelin(n):
     return n
 
 def satlin(n):
-    if n < 0:
-        return 0
-    elif n <= 1:
-        return n
-    else:
-        return 1
+    for x in np.nditer(n, op_flags=['readwrite']):
+        if x[...] < 0:
+            x[...] = 0
+        elif x[...] <= 1:
+            x[...] = x[...]
+        else:
+            x[...] =  1
+    return n
 
 def satlins(n):
-    if n < -1:
-        return -1
-    elif n <= 1:
-        return n
-    else:
-        return 1
+    for x in np.nditer(n, op_flags=['readwrite']):
+        if x[...] < -1:
+            x[...] = -1
+        elif x[...] <= 1:
+            x[...] = x[...]
+        else:
+            x[...] =  1
+    return n
 
 def logsigmoid(n):
-    return 1.0 / (1 + np.exp(-n))
+    for x in np.nditer(n, op_flags=['readwrite']):
+        x[...] = 1.0 / (1.0 + np.exp(-x[...]))
+    return n
 
 def tansig(n):
-    e1 = np.exp(n)
-    e2 = np.exp(-n)
-    return (e1 + e2) / (e1 + e2)
+    for x in np.nditer(n, op_flags=['readwrite']):
+        e1 = np.exp(x[...])
+        e2 = np.exp(-x[...])
+        x[...] = (e1 + e2) / (e1 + e2)
+    return n
+
 
 class NeuralLayer:
     def __init__(self, input_size, output_size, neural_function):
