@@ -87,3 +87,13 @@ class NeuralNetwork:
 
         return nn_output
 
+    def get_weights(self):
+        w = []
+
+        for i in xrange(0, len(self.arch)-1):
+            for lw in self.layers[i].weights:
+                w.append(lw)
+
+        return w
+
+
