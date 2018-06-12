@@ -5,7 +5,7 @@ try:
 except NameError:
     xrange = range
 
-def learn(nn, input_samples, targets, epoches=10, min_mse=1e-16, max_mse=1e+100):
+def learn(nn, input_samples, targets, epoches=10000, min_mse=1e-16, max_mse=1e+100):
 
     if len(nn.layers) > 1:
         print("Error: " + \
@@ -22,20 +22,23 @@ def learn(nn, input_samples, targets, epoches=10, min_mse=1e-16, max_mse=1e+100)
         mse = 0
         for i in xrange(0, len(input_samples)):
             nn_output = nn.get_output(input_samples[i])
-            print('For epoch %s and input %s got output %s given target %s' \
-                % (e, i, nn_output, targets[i]))
+            # print('For epoch %s and input %s got output %s given target %s' \
+            #     % (e, i, nn_output, targets[i]))
             nn_error = targets[i] - nn_output
-            mse = mse + np.inner(nn_error, nn_error)
+            # print('debug: perceptron - nn_error ' + str(np.inner(nn_error, nn_error)))
+            mse = mse + np.inner(nn_error.flatten(), nn_error.flatten())
+
             nn.layers[0].weights = nn.layers[0].weights + \
                     np.dot(nn_error,np.transpose(input_samples[i]))
             nn.layers[0].bias = nn.layers[0].bias + nn_error
+        print('For epoch %s got MSE %s' %(e, mse))
         if mse < min_mse:
             print('At epoch %s training achieved MSE min limit: %s' %(e, mse))
             return
         if mse > max_mse:
             print('At epoch %s training achieved MSE max limit: %s' %(e, mse))
             return
-        print('For epoch %s got MSE %s' %(e, mse))
+        
 
 
 

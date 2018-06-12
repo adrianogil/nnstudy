@@ -65,10 +65,12 @@ class NeuralLayer:
         # self.neurons = neurons
         self.neural_function = neural_function
         self.weights = np.random.random((output_size, input_size))
-        self.bias = np.random.random((output_size, output_size))
+        self.bias = np.random.random((output_size, 1))
 
     def get_output(self, input_vector):
-        return self.neural_function(self.weights.dot(input_vector) + self.bias)
+        n = self.weights.dot(input_vector) + self.bias
+        # print('debug: layer - n ' + str(n))
+        return self.neural_function(n)
 
 class NeuralNetwork:
     def __init__(self, arch, neural_functions):
@@ -83,7 +85,9 @@ class NeuralNetwork:
         nn_output = input_vector
 
         for i in xrange(0, len(self.arch)-1):
+            # print('debug: nn_input - ' + str(nn_output))
             nn_output = self.layers[i].get_output(nn_output)
+            # print('debug: nn_output - ' + str(nn_output))
 
         return nn_output
 
