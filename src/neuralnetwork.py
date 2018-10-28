@@ -57,6 +57,13 @@ def tansig(n):
         x[...] = (e1 + e2) / (e1 + e2)
     return n
 
+def poslin(n):
+    for x in np.nditer(n, op_flags=['readwrite']):
+        if x[...] < 0:
+            x[...] = 0
+        else:
+            x[...] = x[...]
+    return n
 
 class NeuralLayer:
     def __init__(self, input_size, output_size, neural_function):
