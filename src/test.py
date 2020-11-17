@@ -3,6 +3,7 @@ import neuralnetwork as nnet
 
 import perceptron
 
+
 def test1():
     print('Test 1')
     nn = NeuralNetwork([2,1], [nnet.hardlim])

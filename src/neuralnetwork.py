@@ -106,5 +106,3 @@ class NeuralNetwork:
                 w.append(lw)
 
         return w
-
-
