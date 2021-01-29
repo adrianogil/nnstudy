@@ -45,7 +45,11 @@ def satlins(n):
             x[...] =  1
     return n
 
-def logsigmoid(n):
+def logsigmoid(n, derivative=False):
+    if derivative:
+        sigmoid_result = logsigmoid(n)
+        return sigmoid_result * (1 - sigmoid_result)
+
     for x in np.nditer(n, op_flags=['readwrite']):
         x[...] = 1.0 / (1.0 + np.exp(-x[...]))
     return n
