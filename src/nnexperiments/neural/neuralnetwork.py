@@ -110,3 +110,8 @@ class NeuralNetwork:
                 w.append(lw)
 
         return w
+
+    def set_weights(self, weights):
+        for i in range(0, len(self.arch)-1):
+            self.layers[i].weights = weights[:len(self.layers[i].weights)]
+            self.layers[i].weights =  self.layers[i].weights[len(self.layers[i].weights):]
